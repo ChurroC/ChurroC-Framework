@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .checked {
+                text-decoration: line-through;
+            }
+        </style>
+        <script>
+            function getElement(dataName) {
+                return document.querySelector(`[data-churro*='${dataName}']`);
+            }
+            function getElementAll(dataName) {
+                return document.querySelectorAll(
+                    `[data-churro*='${dataName}']`
+                );
+            }
+
+            let itemData = {
+                status: true,
+                text: "sss"
+            }
+            let index = 0
+
+            function setNewItem(value) {
+                newItem = value;
+                getElement("randomInput1").value = value;
+            }
+
+            function setTodoList(value) {
+                todoList = value;
+            }
+
+            function addToList() {
+                setTodoList([...todoList, { text: newItem, status: false }]);
+                setNewItem("");
+            }
+
+            function removeFromList(index) {
+                setTodoList(todoList.splice(index, 1));
+            }
+        </script>
+    </head>
+    <body>
+        <input type="checkbox" data-churro="eachTodoListAs1" />
+        <span class="" data-churro="eachTodoListAs1">{item.text}</span>
+        <span onclick="removeFromList(1)" data-churro="eachTodoListAs1"
+            >❌</span
+        >
+        <br />
+        <input type="checkbox" data-churro="eachTodoListAs2" />
+        <span class="" data-churro="eachTodoListAs2">{item.text}</span>
+        <span onclick="removeFromList(2)" data-churro="eachTodoListAs2"
+            >❌</span
+        >
+        <br />
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+
+            hello-world {
+                font-weight: bold; /* ignored */
+                color: red;
+            }
+
+            /* ignored */
+            hello-world p {
+                background-color: red;
+            }
+        </style>
+        <script>
+            // web component
+            class HelloWorld extends HTMLElement {
+                constructor() {
+                    super();
+                    this.name = "World";
+                }
+
+                // component attributes
+                static get observedAttributes() {
+                    return ["name"];
+                }
+
+                // attribute change
+                attributeChangedCallback(property, oldValue, newValue) {
+                    if (oldValue === newValue) return;
+                    this[property] = newValue;
+                }
+
+                // connect component
+                connectedCallback() {
+                    const shadow = this.attachShadow({ mode: "closed" });
+
+                    shadow.innerHTML = `<p>Hello ${this.name}!</p>`;
+
+                    const script = document.createElement("script");
+                    script.textContent = `console.log("s")`;
+                    shadow.appendChild(script);
+
+                    const style = document.createElement("style");
+                    style.textContent = `
+                        p {
+                        text-align: center;
+                        font-weight: normal;
+                        padding: 1em;
+                        margin: 0 0 2em 0;
+                        background-color: #eee;
+                        border: 1px solid #666;
+                        }`;
+                    shadow.appendChild(style);
+                }
+            }
+
+            // register component
+            customElements.define("hello-world", HelloWorld);
+        </script>
+    </head>
+    <body>
+        <p>A new <code>&lt;hello-world&gt;</code> Web Component...</p>
+
+        <hello-world id="hw" name="Craig"></hello-world>
+        <p>A new <code>&lt;hello-world&gt;</code> Web Component...</p>
+
+        <hello-world id="hw" name="Crassig"></hello-world>
+    </body>
+</html>
